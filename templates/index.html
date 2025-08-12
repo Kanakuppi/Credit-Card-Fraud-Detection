@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head><title>Credit Card Fraud Detection</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f4f4f4;
+    }
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+    input[type="number"], select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box; /* Added for better padding handling */
+    }
+    input[type="submit"] {
+        background-color: #5cb85c;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    input[type="submit"]:hover {
+        background-color: #4cae4c;
+    }
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+    }
+</style>
+</head>
+<body>
+  <h1>Credit Card Fraud Detection</h1>
+  <form action="/predict" method="post">
+    <label for="model_type">Choose Model:</label>
+    <select name="model_type" id="model_type">
+      <option value="logistic">Logistic Regression</option>
+      <option value="decision">Random Forest</option>
+    </select><br><br>
+
+    <!-- Add input fields for all your features (Time, V1, V2, ..., Amount) -->
+    <!-- Example for Time: -->
+    <label for="Time">Time:</label>
+    <input type="number" step="any" id="Time" name="Time"><br><br>
+
+    <!-- Add all other V features similarly -->
+    {% for i in range(1, 29) %}
+      <label for="V{{ i }}">V{{ i }}:</label>
+      <input type="number" step="any" id="V{{ i }}" name="V{{ i }}"><br><br>
+    {% endfor %}
+
+    <label for="Amount">Amount:</label>
+    <input type="number" step="any" id="Amount" name="Amount"><br><br>
+
+    <input type="submit" value="Predict">
+  </form>
+
+  {% if prediction is not none %}
+    <h2>Prediction: {{ prediction }}</h2>
+  {% endif %}
+</body>
+</html>
